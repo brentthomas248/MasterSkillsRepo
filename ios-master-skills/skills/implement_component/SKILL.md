@@ -184,7 +184,87 @@ VStack {
 .accessibilityLabel("Success indicator")
 ```
 
-### 6. Self-Correction
+### 6. Generate Unit Tests
+
+**MANDATORY:** Every ViewModel MUST have a matching XCTest file.
+
+**Path Pattern:**
+```
+Tests/FeaturesTests/[FeatureName]Tests/[ViewName]ViewModelTests.swift
+```
+
+**Test Template:**
+```swift
+import XCTest
+@testable import [AppName]
+
+final class [ViewName]ViewModelTests: XCTestCase {
+    var sut: [ViewName]ViewModel!
+
+    override func setUp() {
+        super.setUp()
+        sut = [ViewName]ViewModel()
+    }
+
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
+
+    // MARK: - State Transition Tests
+
+    func testInitialState() {
+        // Given: A newly initialized ViewModel
+
+        // When: No action taken
+
+        // Then: State should be idle
+        XCTAssertEqual(sut.state, .idle)
+    }
+
+    func testLoadingState() async {
+        // Given: ViewModel in idle state
+
+        // When: Performing async action
+        await sut.performAction()
+
+        // Then: State should transition through loading
+        // (Adjust based on your ViewModel's behavior)
+    }
+
+    func testSuccessState() async {
+        // Given: ViewModel with valid data
+
+        // When: Action completes successfully
+        // [Call ViewModel method]
+
+        // Then: State should be content/success
+        // XCTAssertEqual(sut.state, .content)
+    }
+
+    func testErrorState() async {
+        // Given: ViewModel with failing service
+
+        // When: Action fails
+        // [Call ViewModel method with mock that fails]
+
+        // Then: State should be error with message
+        // if case .error(let message) = sut.state {
+        //     XCTAssertFalse(message.isEmpty)
+        // } else {
+        //     XCTFail("Expected error state")
+        // }
+    }
+}
+```
+
+**Requirements:**
+- **Must** test all `State` enum cases.
+- **Must** verify state transitions (e.g., `idle` → `loading` → `success`).
+- **Should** test computed properties (`isLoading`, `errorMessage`).
+- **Should** use dependency injection to test with mock services.
+
+### 7. Self-Correction
 
 Before outputting the code, verify:
 
@@ -211,9 +291,15 @@ Before outputting the code, verify:
 - [ ] View has no business logic (only rendering and calling ViewModel methods).
 - [ ] ViewModel exposes a `State` enum.
 
-### 7. Output Format
+### 8. Output Format
 
 Present the code with clear file paths and explanations:
+
+**⚠️ CRITICAL:** All generated files MUST include the following warning at the end:
+
+```
+⚠️ **Action Required:** Add these new files to your Xcode Target or `Package.swift` to prevent build errors.
+```
 
 ```
 ## Implementation: [ComponentName]
@@ -230,16 +316,28 @@ Present the code with clear file paths and explanations:
 
 ---
 
+**File:** `Tests/FeaturesTests/[Feature]Tests/[ViewName]ViewModelTests.swift`
+
+[XCTest Code]
+
+---
+
 ### HIG Compliance Verification
 ✅ Touch targets: All buttons meet 44pt minimum
 ✅ Typography: Using Dynamic Type-compatible styles
 ✅ Colors: Using semantic system colors
 ✅ Accessibility: All interactive elements have labels
 
+### Test Coverage
+✅ State transitions tested (idle → loading → success/error)
+✅ ViewModel computed properties verified
+✅ Dependency injection ready for mocks
+
 ### Next Steps
 1. Add this view to your navigation structure.
 2. Implement the service layer if network calls are needed.
-3. Write unit tests for the ViewModel.
+
+⚠️ **Action Required:** Add these new files to your Xcode Target or `Package.swift` to prevent build errors.
 ```
 
 ## Examples

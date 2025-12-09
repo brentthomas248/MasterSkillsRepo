@@ -11,6 +11,7 @@ Before starting, **read these files immediately**:
 1. `../../knowledge/ios_hig/typography.md` — Understand semantic text styles and Dynamic Type.
 2. `../../knowledge/ios_hig/layout.md` — Understand touch targets, safe areas, and spacing.
 3. `../../knowledge/ios_hig/colors.md` — Understand semantic color usage.
+4. `../../knowledge/templates/FEATURE_SPEC.md` — Use this standard format when interpreting user requirements.
 
 ## Objective
 
