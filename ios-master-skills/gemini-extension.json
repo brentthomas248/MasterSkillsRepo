@@ -1,0 +1,6 @@
+{
+  "name": "ios-master-skills",
+  "version": "1.0.0",
+  "description": "Master skill tree for iOS development",
+  "main": "SKILL.md" 
+}

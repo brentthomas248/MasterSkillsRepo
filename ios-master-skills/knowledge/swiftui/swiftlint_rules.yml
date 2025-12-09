@@ -1,0 +1,149 @@
+# SwiftLint Configuration
+# This file enforces strict code quality standards for iOS projects.
+# Place this file at the root of your Xcode project as `.swiftlint.yml`
+
+# Paths to include/exclude
+included:
+  - Sources
+excluded:
+  - Pods
+  - Carthage
+  - .build
+  - DerivedData
+
+# Rule Configuration
+opt_in_rules:
+  - array_init
+  - attributes
+  - closure_end_indentation
+  - closure_spacing
+  - collection_alignment
+  - contains_over_first_not_nil
+  - empty_count
+  - empty_string
+  - explicit_init
+  - first_where
+  - force_unwrapping
+  - implicit_return
+  - joined_default_parameter
+  - literal_expression_end_indentation
+  - modifier_order
+  - multiline_arguments
+  - multiline_function_chains
+  - multiline_parameters
+  - operator_usage_whitespace
+  - overridden_super_call
+  - pattern_matching_keywords
+  - prefer_self_type_over_type_of_self
+  - redundant_nil_coalescing
+  - redundant_type_annotation
+  - sorted_first_last
+  - static_operator
+  - toggle_bool
+  - trailing_closure
+  - unavailable_function
+  - unneeded_parentheses_in_closure_argument
+  - vertical_parameter_alignment_on_call
+  - vertical_whitespace_closing_braces
+  - vertical_whitespace_opening_braces
+  - yoda_condition
+
+disabled_rules:
+  - todo  # Allow TODO comments for development
+  - line_length  # We'll use a custom length below
+
+# Custom Rule Configurations
+force_unwrapping:
+  severity: error  # CRITICAL: Force unwraps cause crashes
+
+force_cast:
+  severity: error  # Force casting is equally dangerous
+
+identifier_name:
+  min_length: 2
+  max_length: 50
+  excluded:
+    - id
+    - x
+    - y
+    - z
+    - i
+    - j
+    - k
+
+type_name:
+  min_length: 3
+  max_length: 50
+
+line_length:
+  warning: 120
+  error: 150
+  ignores_comments: true
+  ignores_urls: true
+
+function_body_length:
+  warning: 50
+  error: 100
+
+file_length:
+  warning: 500
+  error: 1000
+
+type_body_length:
+  warning: 300
+  error: 500
+
+cyclomatic_complexity:
+  warning: 10
+  error: 20
+
+nesting:
+  type_level:
+    warning: 2
+  function_level:
+    warning: 3
+
+trailing_whitespace:
+  ignores_empty_lines: false
+  ignores_comments: false
+
+# Custom Rules
+custom_rules:
+  hardcoded_frame_width:
+    name: "Hardcoded Frame Width"
+    regex: '\.frame\(width:\s*\d+\)'
+    message: "Avoid hardcoding frame widths. Use relative sizing or design system tokens."
+    severity: warning
+
+  hardcoded_frame_height:
+    name: "Hardcoded Frame Height"
+    regex: '\.frame\(height:\s*\d+\)'
+    message: "Avoid hardcoding frame heights unless for specific UI elements (e.g., buttons). Use minHeight or design system tokens."
+    severity: warning
+
+  hardcoded_padding:
+    name: "Hardcoded Padding"
+    regex: '\.padding\(\d+\)'
+    message: "Use semantic spacing tokens (.xs, .md, .lg) instead of hardcoded padding values."
+    severity: warning
+
+  hardcoded_color:
+    name: "Hardcoded Color"
+    regex: 'Color\(red:|\.init\(red:'
+    message: "Use semantic colors (Color.primary, .systemBackground) or Asset Catalog colors instead of RGB values."
+    severity: warning
+
+  print_statement:
+    name: "Print Statement"
+    regex: 'print\('
+    message: "Use a proper logging system (e.g., Logger) instead of print statements."
+    severity: warning
+
+  missing_view_model_state:
+    name: "Missing ViewModel State"
+    regex: 'class\s+\w+ViewModel(?!.*enum\s+State)'
+    message: "ViewModels should expose a State enum (Idle, Loading, Content, Error)."
+    severity: warning
+
+# Reporter
+reporter: "xcode"  # Use Xcode-compatible output format
